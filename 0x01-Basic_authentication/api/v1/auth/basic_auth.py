@@ -7,12 +7,12 @@ import binascii
 from typing import Tuple, TypeVar
 
 from .auth import Auth
-from models.user import User
 
 
 class BasicAuth(Auth):
     """Basic authentication class.
     """
+
     def extract_base64_authorization_header(
             self,
             authorization_header: str) -> str:
@@ -24,12 +24,12 @@ class BasicAuth(Auth):
             field_match = re.fullmatch(pattern, authorization_header.strip())
             if field_match is not None:
                 return field_match.group('token')
-        return None
+        return ''
 
     def decode_base64_authorization_header(
             self,
             base64_authorization_header: str,
-            ) -> str:
+    ) -> str:
         """Decodes a base64-encoded authorization header.
         """
         if type(base64_authorization_header) == str:
@@ -40,12 +40,14 @@ class BasicAuth(Auth):
                 )
                 return res.decode('utf-8')
             except (binascii.Error, UnicodeDecodeError):
-                return None
+                return ''
+        return ''
+
 
     def extract_user_credentials(
             self,
             decoded_base64_authorization_header: str,
-            ) -> Tuple[str, str]:
+    ) -> Tuple[str, str] | None:
         """Extracts user credentials from a base64-decoded authorization
         header that uses the Basic authentication flow.
         """
@@ -59,7 +61,7 @@ class BasicAuth(Auth):
                 user = field_match.group('user')
                 password = field_match.group('password')
                 return user, password
-        return None, None
+        return None
 
     def user_object_from_credentials(
             self,
