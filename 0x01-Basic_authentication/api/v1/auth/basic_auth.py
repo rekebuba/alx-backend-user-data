@@ -25,7 +25,7 @@ class BasicAuth(Auth):
             field_match = re.fullmatch(pattern, authorization_header.strip())
             if field_match is not None:
                 return field_match.group('token')
-        return ''
+        return None
 
     def decode_base64_authorization_header(
             self,
@@ -41,8 +41,7 @@ class BasicAuth(Auth):
                 )
                 return res.decode('utf-8')
             except (binascii.Error, UnicodeDecodeError):
-                return ''
-        return ''
+                return None
 
     def extract_user_credentials(
             self,
@@ -61,7 +60,7 @@ class BasicAuth(Auth):
                 user = field_match.group('user')
                 password = field_match.group('password')
                 return user, password
-        return None
+        return None, None
 
     def user_object_from_credentials(
             self,
