@@ -17,12 +17,12 @@ class Auth:
                 pattern = ''
                 # if exclusion_path[-1] == '*':
                 #     pattern = '{}.*'.format(exclusion_path[0:-1])
-                if exclusion_path[-1] == '/':
-                    pattern = '{}/*'.format(exclusion_path[0:-1])
-                else:
-                    pattern = '{}/*'.format(exclusion_path)
-                if re.match(pattern, path):
-                    return False
+                # if exclusion_path[-1] == '/':
+                #     pattern = '{}/*'.format(exclusion_path[0:-1])
+                # else:
+                #     pattern = '{}/*'.format(exclusion_path)
+                # if re.match(pattern, path):
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:
