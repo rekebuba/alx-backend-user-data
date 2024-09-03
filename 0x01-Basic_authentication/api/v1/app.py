@@ -24,8 +24,6 @@ if auth_type == 'basic_auth':
 
 @app.errorhandler(404)
 def not_found(error) -> str:
-    """Not found handler.
-    """
     return jsonify({"error": "Not found"}), 404
 
 
